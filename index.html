@@ -2,333 +2,266 @@
 <html lang="en">
 <head>
 
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
 
-    <title>ASquare AI</title>
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="style.css">
+<title>
+ASquare AI
+</title>
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet"
+href="style.css">
 
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <!-- jsPDF -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 </head>
+
 <body>
 
-<!-- NAVBAR -->
+<!-- Top Bar -->
 
-<nav>
+<div class="topbar">
 
-    <div class="logo">
-        <i class="fa-solid fa-shield-halved"></i>
-        ASquare AI
-    </div>
+<h2>
 
-    <ul>
+ASquare AI
 
-        <li><a href="#">Home</a></li>
+</h2>
 
-        <li><a href="#scanner">
-            Scanner
-        </a></li>
+<button id="themeBtn">
 
-        <li><a href="#dashboard">
-            Dashboard
-        </a></li>
+🌙
 
-        <li><a href="#history">
-            History
-        </a></li>
+</button>
 
-    </ul>
+</div>
 
-    <button id="themeBtn">
-        🌙
-    </button>
 
-</nav>
+<!-- Hero -->
 
-<!-- HERO -->
+<div class="hero">
 
-<section class="hero">
+<i class="fa-solid fa-shield-halved"></i>
 
-    <h1 id="typing"></h1>
+<h1>
 
-    <p>
-        AI Powered Website Security
-    </p>
+ASquare AI
 
-    <div class="scan-box" id="scanner">
+</h1>
 
-        <input
-        type="text"
-        id="urlInput"
-        placeholder="Enter Website URL">
+<p>
 
-        <button onclick="checkURL()">
+Think Smart. Stay Secure.
 
-            Analyze Website
+</p>
 
-        </button>
+<small>
 
-    </div>
+Founded by
 
-    <div id="result">
+Akshara Tagde & Anurag Ahake
 
-    </div>
+</small>
 
-    <!-- Risk Meter -->
+</div>
 
-    <div class="riskBar">
 
-        <div id="riskFill">
+<!-- Website Scanner -->
 
-        </div>
+<div class="card">
 
-    </div>
+<h3>
 
-</section>
+🔍 Website Scanner
 
+</h3>
 
-<!-- AI EXPLANATION -->
+<input
 
-<section>
+type="text"
 
-    <h2>
+id="urlInput"
 
-        <i class="fa-solid fa-brain"></i>
+placeholder="Enter Website URL">
 
-        AI Explanation
+<button
 
-    </h2>
+onclick="checkURL()">
 
-    <div class="explain-box">
+Analyze
 
-        <p id="reason">
+</button>
 
-            Waiting for analysis...
+<div id="result">
 
-        </p>
+</div>
 
-    </div>
+</div>
 
-</section>
 
+<!-- AI Explanation -->
 
-<!-- DASHBOARD -->
+<div class="card">
 
-<section id="dashboard">
+<h3>
 
-    <h2>
+🧠 AI Explanation
 
-        <i class="fa-solid fa-chart-line"></i>
+</h3>
 
-        Analytics Dashboard
+<p id="reason">
 
-    </h2>
+Waiting for scan...
 
+</p>
 
-    <div class="cards">
+</div>
 
-        <div class="card">
 
-            <h3>
-                Total Scans
-            </h3>
+<!-- Dashboard -->
 
-            <span id="total">
+<div class="card">
 
-                0
+<h3>
 
-            </span>
+📊 Dashboard
 
-        </div>
+</h3>
 
+<p>
 
-        <div class="card">
+Total Scans :
 
-            <h3>
-                Safe Websites
-            </h3>
+<span id="total">
 
-            <span id="safe">
+0
 
-                0
+</span>
 
-            </span>
+</p>
 
-        </div>
+<br>
 
+<p>
 
-        <div class="card">
+Safe Websites :
 
-            <h3>
-                Phishing Websites
-            </h3>
+<span id="safe">
 
-            <span id="phishing">
+0
 
-                0
+</span>
 
-            </span>
+</p>
 
-        </div>
+<br>
 
-    </div>
+<p>
 
+Phishing Websites :
 
-    <canvas id="myChart">
+<span id="phishing">
 
-    </canvas>
+0
 
-</section>
+</span>
 
+</p>
 
-<!-- SCREENSHOT SECTION -->
+</div>
 
-<section>
 
-    <h2>
+<!-- Screenshot Upload -->
 
-        <i class="fa-solid fa-image"></i>
+<div class="card">
 
-        Screenshot Upload
+<h3>
 
-    </h2>
+📷 Screenshot Upload
 
-    <input
-    type="file"
-    id="imageUpload">
+</h3>
 
-    <div class="preview">
+<input
 
-        <img
-        id="previewImage">
+type="file"
 
-    </div>
+id="imageUpload">
 
-</section>
+<div class="preview">
 
+<img
 
-<!-- QR -->
+id="previewImage">
 
-<section>
+</div>
 
-    <h2>
+</div>
 
-        <i class="fa-solid fa-qrcode"></i>
 
-        QR Scanner
+<!-- History -->
 
-    </h2>
+<div class="card">
 
-    <button onclick="scanQR()">
+<h3>
 
-        Scan QR Code
+🕒 Scan History
 
-    </button>
+</h3>
 
-</section>
+<ul id="historyList">
 
+</ul>
 
-<!-- HISTORY -->
+<button
 
-<section id="history">
+onclick="clearHistory()">
 
-    <h2>
+Clear History
 
-        <i class="fa-solid fa-clock-rotate-left"></i>
+</button>
 
-        Scan History
+</div>
 
-    </h2>
 
-
-    <ul id="historyList">
-
-    </ul>
-
-
-    <button onclick="clearHistory()">
-
-        Clear History
-
-    </button>
-
-</section>
-
-
-<!-- REPORT -->
-
-<section>
-
-    <h2>
-
-        <i class="fa-solid fa-file-pdf"></i>
-
-        Export Report
-
-    </h2>
-
-
-    <button onclick="generatePDF()">
-
-        Download PDF
-
-    </button>
-
-
-    <button onclick="downloadCSV()">
-
-        Download CSV
-
-    </button>
-
-
-    <button onclick="resetDashboard()">
-
-        Reset Dashboard
-
-    </button>
-
-</section>
-
-
-<!-- CLOCK -->
-
-<section>
-
-    <h2 id="clock">
-
-    </h2>
-
-</section>
-
-
-<!-- FOOTER -->
+<!-- Footer -->
 
 <footer>
 
-    © 2026 ASquare AI 
-    Founders - Akshara Tagde , Anurag Ahake
+<h3>
 
-    <br>
+ASquare AI
 
-    Detect • Defend • Browse Securely
+</h3>
+
+<br>
+
+<p>
+
+Founded by
+
+Akshara Tagde & Anurag Ahake
+
+</p>
+
+<br>
+
+<p>
+
+© 2026
+
+ASquare AI
+
+</p>
 
 </footer>
 
 
-<script src="script.js"></script>
+<script src="script.js">
+
+</script>
 
 </body>
 </html>

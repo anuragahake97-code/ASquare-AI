@@ -1,354 +1,328 @@
-// ================= VARIABLES =================
+// Counters
 
-let totalScans = Number(localStorage.getItem("totalScans")) || 0;
-let safeCount = Number(localStorage.getItem("safeCount")) || 0;
-let phishingCount = Number(localStorage.getItem("phishingCount")) || 0;
+let totalScans = 0;
+let safeCount = 0;
+let phishingCount = 0;
 
-let historyData =
-JSON.parse(localStorage.getItem("history")) || [];
+// History
 
-document.getElementById("total").innerText = totalScans;
-document.getElementById("safe").innerText = safeCount;
-document.getElementById("phishing").innerText = phishingCount;
+let historyData = [];
 
-// ================= CHART =================
 
-let ctx = document.getElementById("myChart");
+// WEBSITE ANALYSIS
 
-let chart = new Chart(ctx, {
-    type: "doughnut",
-    data: {
-        labels: ["Safe", "Phishing"],
-        datasets: [{
-            data: [safeCount, phishingCount],
-            backgroundColor: [
-                "#00e676",
-                "#ff1744"
-            ]
-        }]
-    }
-});
-
-// ================= URL ANALYSIS =================
-
-function checkURL() {
+function checkURL(){
 
     let url =
-    document.getElementById("urlInput").value.trim();
+    document.getElementById(
+    "urlInput").value.toLowerCase();
 
     let result =
-    document.getElementById("result");
+    document.getElementById(
+    "result");
 
     let reason =
-    document.getElementById("reason");
+    document.getElementById(
+    "reason");
 
-    if (url === "") {
+    if(url===""){
 
         result.innerHTML =
         "⚠ Please enter a URL";
 
+        result.style.color =
+        "orange";
+
         return;
+
     }
 
     totalScans++;
 
-    let score = 0;
+    let suspiciousWords = [
+
+        "login",
+
+        "verify",
+
+        "bank",
+
+        "secure",
+
+        "paypal",
+
+        "account",
+
+        "signin",
+
+        "update"
+
+    ];
+
+    let phishing = false;
 
     let explanation = [];
 
-    let suspiciousWords = [
-        "login",
-        "verify",
-        "bank",
-        "secure",
-        "update",
-        "signin",
-        "paypal",
-        "account"
-    ];
+    suspiciousWords.forEach(word=>{
 
-    suspiciousWords.forEach(word => {
+        if(url.includes(word)){
 
-        if (url.toLowerCase().includes(word)) {
-
-            score += 25;
+            phishing = true;
 
             explanation.push(
-                "Contains keyword: " + word
+
+            "Contains suspicious keyword: "
+
+            + word
+
             );
+
         }
 
     });
 
-    if (!url.startsWith("https://")) {
-
-        score += 20;
+    if(url.length > 30){
 
         explanation.push(
-            "HTTPS missing"
+
+        "Long URL detected"
+
         );
+
     }
 
-    if (url.length > 30) {
+    if(!url.startsWith(
 
-        score += 20;
+        "https://"
+
+    )){
 
         explanation.push(
-            "Long URL detected"
+
+        "No HTTPS protection"
+
         );
+
     }
 
-    let risk =
-    Math.min(score, 100);
 
-    document.getElementById(
-        "riskFill"
-    ).style.width =
-    risk + "%";
+    // FINAL RESULT
 
-    if (score >= 40) {
+    if(phishing){
 
         phishingCount++;
 
         result.innerHTML =
-        "🔴 PHISHING WEBSITE DETECTED<br>" +
-        "Risk Score: " +
-        risk +
-        "%";
+
+        "🔴 PHISHING WEBSITE DETECTED";
 
         result.style.color =
-        "#ff1744";
 
-    } else {
+        "red";
+
+    }
+
+    else{
 
         safeCount++;
 
         result.innerHTML =
-        "🟢 SAFE WEBSITE<br>" +
-        "Risk Score: " +
-        risk +
-        "%";
+
+        "🟢 SAFE WEBSITE";
 
         result.style.color =
+
         "#00e676";
+
+        explanation.push(
+
+        "No suspicious activity detected"
+
+        );
+
     }
 
+
+    // AI EXPLANATION
+
     reason.innerHTML =
+
     explanation.join("<br>");
 
-    updateDashboard();
 
-    historyData.push({
-        url: url,
-        result:
-        score >= 40 ?
-        "Phishing" :
-        "Safe"
-    });
+    // DASHBOARD
 
-    localStorage.setItem(
-        "history",
-        JSON.stringify(historyData)
-    );
+    document.getElementById(
 
-    showHistory();
+    "total").innerHTML =
 
-}
-
-// ================= DASHBOARD =================
-
-function updateDashboard() {
-
-    document.getElementById("total").innerText =
     totalScans;
 
-    document.getElementById("safe").innerText =
+    document.getElementById(
+
+    "safe").innerHTML =
+
     safeCount;
 
-    document.getElementById("phishing").innerText =
+    document.getElementById(
+
+    "phishing").innerHTML =
+
     phishingCount;
 
-    localStorage.setItem(
-        "totalScans",
-        totalScans
-    );
 
-    localStorage.setItem(
-        "safeCount",
-        safeCount
-    );
+    // HISTORY
 
-    localStorage.setItem(
-        "phishingCount",
-        phishingCount
-    );
+    historyData.push({
 
-    chart.data.datasets[0].data = [
-        safeCount,
-        phishingCount
-    ];
+        url:url,
 
-    chart.update();
+        result:
+
+        phishing ?
+
+        "Phishing"
+
+        :
+
+        "Safe"
+
+    });
+
+    updateHistory();
 
 }
 
-// ================= HISTORY =================
 
-function showHistory() {
+
+// HISTORY FUNCTION
+
+function updateHistory(){
 
     let list =
+
     document.getElementById(
-        "historyList"
+
+    "historyList"
+
     );
 
     list.innerHTML = "";
 
-    historyData
-    .slice()
-    .reverse()
-    .forEach(item => {
+    historyData.slice()
 
-        list.innerHTML += `
+    .reverse()
+
+    .forEach(item=>{
+
+        list.innerHTML +=
+
+        `
+
         <li>
+
         🌐 ${item.url}
+
         <br>
-        Result: ${item.result}
+
+        ${item.result}
+
         </li>
+
         `;
 
     });
 
 }
 
-showHistory();
 
-// ================= CLEAR HISTORY =================
 
-function clearHistory() {
+// CLEAR HISTORY
+
+function clearHistory(){
 
     historyData = [];
 
-    localStorage.removeItem(
-        "history"
-    );
-
-    showHistory();
-
-}
-
-// ================= RESET =================
-
-function resetDashboard() {
-
-    localStorage.clear();
-
-    location.reload();
-
-}
-
-// ================= QR DEMO =================
-
-function scanQR() {
-
-    let qrLink =
-    prompt(
-        "Enter QR URL"
-    );
-
-    if (qrLink) {
-
-        document.getElementById(
-            "urlInput"
-        ).value =
-        qrLink;
-
-        checkURL();
-
-    }
-
-}
-
-// ================= CSV =================
-
-function downloadCSV() {
-
-    let csv =
-    "URL,Result\n";
-
-    historyData.forEach(item => {
-
-        csv +=
-        item.url +
-        "," +
-        item.result +
-        "\n";
-
-    });
-
-    let blob =
-    new Blob([csv]);
-
-    let a =
-    document.createElement("a");
-
-    a.href =
-    URL.createObjectURL(blob);
-
-    a.download =
-    "history.csv";
-
-    a.click();
-
-}
-
-// ================= CLOCK =================
-
-setInterval(() => {
-
-    let time =
-    new Date();
-
     document.getElementById(
-        "clock"
-    ).innerHTML =
-    time.toLocaleTimeString();
 
-}, 1000);
+    "historyList"
 
-// ================= DARK MODE =================
+    ).innerHTML = "";
+
+}
+
+
+
+// IMAGE PREVIEW
 
 document.getElementById(
-    "themeBtn"
-).onclick = function () {
 
-    document.body.classList.toggle(
-        "light"
-    );
+"imageUpload"
 
-};
+).addEventListener(
 
-// ================= TYPING EFFECT =================
+"change",
 
-let text =
-"Protect Yourself From Phishing Attacks";
+function(){
 
-let i = 0;
+let file = this.files[0];
 
-function type() {
+if(file){
 
-    if (i < text.length) {
+let reader =
 
-        document.getElementById(
-            "typing"
-        ).innerHTML +=
-        text.charAt(i);
+new FileReader();
 
-        i++;
+reader.onload =
 
-        setTimeout(type, 70);
+function(e){
 
-    }
+let img =
+
+document.getElementById(
+
+"previewImage"
+
+);
+
+img.src =
+
+e.target.result;
+
+img.style.display =
+
+"block";
 
 }
 
-type();
+reader.readAsDataURL(
+
+file
+
+);
+
+}
+
+});
+
+
+
+// DARK MODE
+
+document.getElementById(
+
+"themeBtn"
+
+).onclick =
+
+function(){
+
+document.body.classList
+
+.toggle(
+
+"light"
+
+);
+
+};

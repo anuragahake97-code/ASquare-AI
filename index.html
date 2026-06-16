@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>ASquare AI</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+</head>
+<body>
+
+<!-- NAVBAR -->
+
+<nav>
+
+    <div class="logo">
+        <i class="fa-solid fa-shield-halved"></i>
+        ASquare AI
+    </div>
+
+    <ul>
+
+        <li><a href="#">Home</a></li>
+
+        <li><a href="#scanner">
+            Scanner
+        </a></li>
+
+        <li><a href="#dashboard">
+            Dashboard
+        </a></li>
+
+        <li><a href="#history">
+            History
+        </a></li>
+
+    </ul>
+
+    <button id="themeBtn">
+        🌙
+    </button>
+
+</nav>
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <h1 id="typing"></h1>
+
+    <p>
+        AI Powered Website Security
+    </p>
+
+    <div class="scan-box" id="scanner">
+
+        <input
+        type="text"
+        id="urlInput"
+        placeholder="Enter Website URL">
+
+        <button onclick="checkURL()">
+
+            Analyze Website
+
+        </button>
+
+    </div>
+
+    <div id="result">
+
+    </div>
+
+    <!-- Risk Meter -->
+
+    <div class="riskBar">
+
+        <div id="riskFill">
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- AI EXPLANATION -->
+
+<section>
+
+    <h2>
+
+        <i class="fa-solid fa-brain"></i>
+
+        AI Explanation
+
+    </h2>
+
+    <div class="explain-box">
+
+        <p id="reason">
+
+            Waiting for analysis...
+
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- DASHBOARD -->
+
+<section id="dashboard">
+
+    <h2>
+
+        <i class="fa-solid fa-chart-line"></i>
+
+        Analytics Dashboard
+
+    </h2>
+
+
+    <div class="cards">
+
+        <div class="card">
+
+            <h3>
+                Total Scans
+            </h3>
+
+            <span id="total">
+
+                0
+
+            </span>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                Safe Websites
+            </h3>
+
+            <span id="safe">
+
+                0
+
+            </span>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                Phishing Websites
+            </h3>
+
+            <span id="phishing">
+
+                0
+
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <canvas id="myChart">
+
+    </canvas>
+
+</section>
+
+
+<!-- SCREENSHOT SECTION -->
+
+<section>
+
+    <h2>
+
+        <i class="fa-solid fa-image"></i>
+
+        Screenshot Upload
+
+    </h2>
+
+    <input
+    type="file"
+    id="imageUpload">
+
+    <div class="preview">
+
+        <img
+        id="previewImage">
+
+    </div>
+
+</section>
+
+
+<!-- QR -->
+
+<section>
+
+    <h2>
+
+        <i class="fa-solid fa-qrcode"></i>
+
+        QR Scanner
+
+    </h2>
+
+    <button onclick="scanQR()">
+
+        Scan QR Code
+
+    </button>
+
+</section>
+
+
+<!-- HISTORY -->
+
+<section id="history">
+
+    <h2>
+
+        <i class="fa-solid fa-clock-rotate-left"></i>
+
+        Scan History
+
+    </h2>
+
+
+    <ul id="historyList">
+
+    </ul>
+
+
+    <button onclick="clearHistory()">
+
+        Clear History
+
+    </button>
+
+</section>
+
+
+<!-- REPORT -->
+
+<section>
+
+    <h2>
+
+        <i class="fa-solid fa-file-pdf"></i>
+
+        Export Report
+
+    </h2>
+
+
+    <button onclick="generatePDF()">
+
+        Download PDF
+
+    </button>
+
+
+    <button onclick="downloadCSV()">
+
+        Download CSV
+
+    </button>
+
+
+    <button onclick="resetDashboard()">
+
+        Reset Dashboard
+
+    </button>
+
+</section>
+
+
+<!-- CLOCK -->
+
+<section>
+
+    <h2 id="clock">
+
+    </h2>
+
+</section>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    © 2026 ASquare AI 
+    Founders - Akshara Tagde , Anurag Ahake
+
+    <br>
+
+    Detect • Defend • Browse Securely
+
+</footer>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
